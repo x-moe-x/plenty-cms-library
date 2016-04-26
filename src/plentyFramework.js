@@ -437,10 +437,15 @@
             }
         }
 
-        var scripts = document.getElementsByTagName( 'SCRIPT' );
-        if ( scripts.length > 0 )
-        {
-            PlentyFramework.scriptPath = scripts[scripts.length - 1].src.match( /(.*)\/(.*)\.js(\?\S*)?$/ )[1];
+        /* nx addition to deal with deferred execution */
+        var scripts = document.getElementsByTagName( 'SCRIPT');
+        for ( var i = 0; i < scripts.length; i++ ) {
+            var pathMatch;
+            if ( ( pathMatch = scripts[i].src.match( /(.*)\/plentymarketsCMStools-(\d+\.\d+\.\d+)(\~nx\d+)?\.(min\.)?js(\?\S*)?$/ ) ) !== null )
+            {
+                PlentyFramework.scriptPath = pathMatch[1];
+                break;
+            }
         }
 
     };
