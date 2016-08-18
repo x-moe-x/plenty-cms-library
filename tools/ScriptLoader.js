@@ -7,6 +7,8 @@ var ScriptLoader = {
      * @param config.position   The position where to load the scripts in ('head', 'body')
      * @param config.rootPath   The base path to search files in
      * @param config.sourceMap  The path to the json file to read the required scripts from
+     * @param config.defer      Use deferred execution of loaded scripts?
+     * @param config.afterInit  The onload parameter to be appended to the last script
      */
     load: function( config ) {
 
@@ -15,6 +17,8 @@ var ScriptLoader = {
         config.position = config.position  || 'head';
         config.rootPath = absolutePath( config.rootPath || '/' );
         config.sourceMap = absolutePath( config.sourceMap || config.rootPath+'scripts.json' );
+        config.defer = config.defer || false;
+        config.afterInit = config.afterInit || "";
 
         // read scripts.json if not done yet
         if ( !this.scripts ) {
@@ -43,7 +47,7 @@ var ScriptLoader = {
                 .concat( ScriptLoader.scripts[config.layout][config.position] );
 
             for (var i = 0; i < libs.length; i++) {
-                document.write('<script src="' + config.rootPath + libs[i] + '" type="text/javascript"><\/script>');
+                document.write('<script ' + ( config.defer ? 'defer ':' ' ) + 'src="' + config.rootPath + libs[i] + '" type="text/javascript"' + (((i === libs.length - 1) && (config.afterInit !== "")) ? 'onload="' + config.afterInit + '"' : '') + '><\/script>')
             }
         }
 
