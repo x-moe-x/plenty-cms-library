@@ -1,0 +1,34 @@
+<div class="row uploadRow">
+	<div class="col-sm-3 beforeUpload">
+		<div class="form-group">
+			<label for="quantity_{{row}}">Motiv {{row}}, Anzahl</label>
+			<select name="Quantity[]" size="1" class="form-control" id="quantity_{{row}}" style="width:100%">{{{options}}}</select>
+		</div>
+	</div>
+	<div class="col-sm-9 beforeUpload">
+		<div class="form-group" data-plenty-validate="text">
+			<label for="file_{{row}}">Motiv {{row}}, Datei</label>
+			<div class="input-group">
+				<label for="file_{{row}}" class="form-control disabled filename">Keine Datei ausgewählt.</label>
+				<label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Durchsuchen&hellip;
+						<input name="File[]" type="file" size="15" accept="image/jpeg,application/pdf" id="file_{{row}}"/>
+                    </span>
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3 duringUpload">
+		<div class="form-group">
+			<label for="quantityinfo_{{row}}">Motiv {{row}}, Anzahl</label>
+			<input class="form-control quantityinfo" id="quantityinfo_{{row}}" disabled="true" value="{{max}}"/>
+		</div>
+	</div>
+	<div class="col-xs-9 duringUpload">
+		<div class="form-group">
+			<label for="fileinfo_{{row}}">Motiv {{row}}, Upload</label>
+			<input class="form-control fileinfo" id="fileinfo_{{row}}" disabled="true"/>
+		</div>
+	</div>
+</div>

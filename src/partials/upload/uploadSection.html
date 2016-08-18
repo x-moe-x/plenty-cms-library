@@ -1,0 +1,16 @@
+<div class="margin-bottom-1">
+	Bitte laden Sie zu diesem Artikel die entsprechenden Motive auf unseren Server. Bei mehreren Motiven je Artikel wählen Sie bitte die zu druckende Anzahl entsprechend aus.
+</div>
+<div class="margin-bottom-1">
+	Erlaubte Formate: jpg, pdf, max. Gesamtuploadgröße: 150 MB
+</div>
+
+<form action="//net-xpress.com/uploadscript/upload.php" method="post" enctype="multipart/form-data" target="resultFor_{{orderId}}_{{article}}" class="margin-bottom-1">
+	<input type="hidden" id="OrderId" name="OrderId" value="{{orderId}}">
+	<input type="hidden" id="ArticleNr" name="ArticleNr" value="{{articleNo}}">
+	<input type="hidden" id="TotalQuantity" name="TotalQuantity" value="{{quantity}}">
+</form>
+<div>
+	<strong>Bitte beachten Sie, dass der Upload je nach Dateigröße mehrere Minuten in Anspruch nehmen kann!</strong>
+</div>
+<iframe width="0" height="0" frameborder="0" name="resultFor_{{orderId}}_{{article}}"></iframe>
