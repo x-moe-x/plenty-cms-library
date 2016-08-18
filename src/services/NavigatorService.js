@@ -398,7 +398,8 @@
          */
         function next()
         {
-            if ( current < navigation.length - 1 )
+            /* nx: excluded nxFakeTab from beeing reachable via next() */
+            if ( current < navigation.length - 1 && navigation.eq(current + 1 ).find("[role='tab']").data("nxFakeTab") != true)
             {
                 goTo( current + 1 );
             }
