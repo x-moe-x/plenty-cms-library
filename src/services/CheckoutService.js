@@ -280,8 +280,53 @@
                 .done( function()
                 {
                     Checkout.reloadContainer( 'MethodsOfPaymentList' );
+                    // nx: added
+                    Checkout.reloadContainer( 'Totals' );
                 } );
 
+		}
+
+		/**
+		 * nx: added
+		 * Set the shipping country used for this order and update ShippingProfilesList / Totals. Selected shipping profile will be
+		 * read from &lt;form> marked with <b>data-plenty-checkout-form="shippingCountrySelect"</b>
+		 * @function setShippingCountry
+		 * @return {object} <a href="http://api.jquery.com/category/deferred-object/" target="_blank">jQuery deferred
+		 *     Object</a>
+		 */
+		function setShippingCountry()
+		{
+			var values = $( '[data-plenty-checkout-form="shippingCountrySelect"]' ).getFormValues();
+
+			Checkout.getCheckout().CheckoutShippingCountryID = values.CountryID;
+			delete Checkout.getCheckout().CheckoutCustomerShippingAddressID;
+			delete Checkout.getCheckout().CheckoutShippingProfileID;
+
+			return Checkout.setCheckout()
+				.done( function ()
+				{
+					methodOfPaymentChanged = false;
+
+					$.each( Checkout.getCheckout().MethodsOfPaymentList, function (idx, methodOfPayment)
+					{
+						if (methodOfPayment.MethodOfPaymentID === 2 && !methodOfPayment.MethodOfPaymentIsSelected && !methodOfPayment.MethodOfPaymentIsDisabled) {
+							Checkout.getCheckout().CheckoutMethodOfPaymentID = 2;
+							methodOfPaymentChanged = true;
+							return false; // loop break
+						}
+					} );
+
+					if (methodOfPaymentChanged) {
+						Checkout.setCheckout().done( function ()
+						{
+							Checkout.reloadContainer( 'ShippingProfilesList' );
+							Checkout.reloadContainer( 'Totals' );
+						} );
+					} else {
+						Checkout.reloadContainer( 'ShippingProfilesList' );
+						Checkout.reloadContainer( 'Totals' );
+					}
+				} );
         }
 
         /**
