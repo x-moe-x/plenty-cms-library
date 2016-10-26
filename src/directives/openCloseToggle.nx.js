@@ -14,11 +14,14 @@
 	 */
 	pm.directive('.dropdown > a[data-nx-enable]', function (i, elem, MediaSizeService) {
 		if ($(elem).attr('data-nx-enable') === "nx-touch-openCloseToggle") {
+			var isBigMenu2 = $(elem).parents('.bigmenu2').length > 0;
 			$(elem).click(function (e) {
 				if (MediaSizeService.interval() === 'xs' || MediaSizeService.interval() === 'sm' || ( MediaSizeService.interval() !== 'xs' && MediaSizeService.interval() !== 'sm' && Modernizr.touch )) {
 					$('.dropdown.open').not($(this).parents()).removeClass('open');
 					$(this).parent().toggleClass('open');
-					return false;
+					//return false;
+					// nx: hacked to perform actual click on md and lg screens
+					return !isBigMenu2 && (MediaSizeService.interval() === 'md' || MediaSizeService.interval() === 'lg');
 				}
 			});
 		}
